@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Snippets</title>
+</head>
+
+<body>
+  <h2>Powershell Schnippets</h2>
+  <ul>
+    <li>
+        show all files of directory
+        <pre>
+Get-ChildItem -force
+gci -fo$ git reset HEAD~     # (1)
+        </pre>
+    </li>
+    <li>
+        remove directory and its children
+        <pre>
+Remove-Item <directory-path> -Recurse -Force
+ri -r -fo <directory-path> 
+        </pre>
+    </li>
+    <li>
+        copy current directory to clipboard
+        <pre>
+get-locations | set-clipboard
+        </pre>
+    </li>
+    <li>
+        print content of file
+        <pre>
+Get-Content D:\log.txt –Wait
+        </pre>
+    </li>
+    <li>
+        grep string from file
+        <pre>
+gc .\foo.txt | Select-String -Pattern "bar"
+        </pre>
+    </li>
+    <li>
+        find file
+        <pre>
+gci -Recurse -Filter "*.cs" -File
+        </pre>
+    </li>
+    <li>
+        get information of process, that listen on port 8080
+        <pre>
+Get-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess
+        </pre>
+    </li>
+    <li>
+        force to kill process with id equals 17104
+        <pre>
+taskkill /f /PID 17104
+        </pre>
+    </li>
+    <li>
+        set alias to executable, e.g. VisualStudio
+        <pre>
+Set-Alias -Name vs -Value 'C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe'
+        </pre>
+    </li>
+  </ul>
+  <a href="index.html">Back to main</a>
+</body>
+
+</html>

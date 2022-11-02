@@ -1,11 +1,75 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Snippets</title>
-  </head>
-  <body>
-    git snippets
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Snippets</title>
+</head>
+
+<body>
+  <h2>Git Schnippets</h2>
+  <ul>
+    <li>
+      Undo a commit & redo
+        <pre>
+$ git commit -m "Something terribly misguided" # (0: Your Accident)
+$ git reset HEAD~                              # (1)
+[ edit files as necessary ]                    # (2)
+$ git add .                                    # (3)
+$ git commit -c ORIG_HEAD                      # (4)
+        </pre>
+    </li>
+    <li>
+      show nice branch graph
+      <pre>
+git log --graph --decorate --oneline
+      </pre>
+    </li>
+    <li>
+      show remote-branch-list
+      <pre>
+git branch -vv
+      </pre>
+    </li>
+    <li>
+      show history of file
+      <pre>
+git log -p PATH_TO_FILE
+      </pre>
+    </li>
+    <li>
+      sync local remote-branch-list with remote
+      <pre>
+git fetch -p
+      </pre>
+    </li>
+    <li>
+      list all commits that changed file
+      <pre>
+git log --follow PATH_TO_FILE
+      </pre>
+    </li>
+    <li>
+      rename branch
+      <pre>
+git branch -m NEW_BRANCH_NAME
+      </pre>
+    </li>
+    <li>
+      add submodule [to specific path] [with tracking specfic branch]
+      <pre>
+git submodule add [-b <branch>] <repository> [<path>]
+      </pre>
+    </li>
+    <li>
+      update submodule to latest commit of configured branch
+      <pre>
+git submodule update --remote
+      </pre>
+    </li>
+  </ul>
+  <a href="index.html">Back to main</a>
+</body>
+
 </html>
