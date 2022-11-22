@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>ANTLR Snippets</title>
+</head>
+
+<body>
+<pre>
+-------------------------------------------------------------------------------
+ANTLR
+---------------------------------------
+    Preparation Windows 10
+    copy ANTLR complete binar to disk, e.g. 'c:\bin\antlr-4.10.1-complete.jar'
+    create CLASSPATH variable with '.;C:\bin\antlr-4.10.1-complete.jar;'
+
+    Powershell script
+    ---------------------------------------
+    param (
+        [string]$PathToAntlr = "C:\bin\antlr-4.10.1-complete.jar",
+        [ValidateSet('tokens','gui','tree')]
+        [string]$TestRigArg = "tokens",
+        [string]$PathToFlowFile = "..\FlowFiles\simpleFlowFile",
+        [switch]$Clean = $false
+    )
+
+    $PathToGrammar = "..\FlowDescriptionLanguage\Grammar\"
+
+    if (-not (Test-Path -Path $PathToGrammar)) {
+        Write-Host "ABORTED: Could not find directory($($PathToGrammar))" - -ForegroundColor Red
+        Write-Host "REMARK: Run script from script directory" - -ForegroundColor Red
+        return
+    }
+
+    Write-Host "Create lexer and parser files for java" -ForegroundColor Blue
+    java -jar $PathToAntlr -visitor "$($PathToGrammar)FdlParser.g4" "$($PathToGrammar)FdlLexer.g4"
+    Write-Host "--> DONE" -ForegroundColor Green
+
+    Write-Host "Compile java files" -ForegroundColor Blue
+    javac "$($PathToGrammar)*.java"
+    Write-Host "--> DONE" -ForegroundColor Green
+
+    Write-Host "Run TestRig with arg [$($TestRigArg)]" -ForegroundColor Blue
+    java -cp "$($PathToGrammar);$PathToAntlr" org.antlr.v4.gui.TestRig Fdl flow $PathToFlowFile "-$($TestRigArg)"
+    Write-Host "--> DONE" -ForegroundColor Green
+
+    if($Clean)
+    {
+        Write-Host "Clean up ..." -ForegroundColor Blue
+        Write-Host "`tremove java files" -ForegroundColor Blue
+        Remove-Item "$PathToGrammar\*.java"
+        Write-Host "`tremove class files" -ForegroundColor Blue
+        Remove-Item "$PathToGrammar\*.class"
+        Write-Host "`tremove tokens files" -ForegroundColor Blue
+        Remove-Item "$PathToGrammar\*.tokens"
+        Write-Host "`tremove interp files" -ForegroundColor Blue
+        Remove-Item "$PathToGrammar\*.interp"
+        Write-Host "--> DONE" -ForegroundColor Green
+    }
+    ---------------------------------------
+    Simple command
+        java -jar C:\bin\antlr-4.10.1-complete.jar -visitor .\FdlLexer.g4 .\FdlParser.g4
+        javac *.java
+        java -cp $env:CLASSPATH org.antlr.v4.gui.TestRig Fdl flow -gui
+        VARIABLE VarZone "ZONE"
+        CTRL + Z
+        ENTER
+    
+
+-------------------------------------------------------------------------------
+---------------------------------------    
+</pre>
+
+</body>
+
+</html>
